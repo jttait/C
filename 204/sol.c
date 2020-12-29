@@ -1,8 +1,8 @@
 /*
- * Exercise 2-4. Write the function htoi(s), which converts a string of
- * hexadecimal digits (including an optional 0x or 0X) into its equivalent
- * integer value. The allowable digits are 0 through 9, a through f, and A
- * through F.
+ * Exercise 1-24. Write a program to check a C program for rudimentary syntax
+ * errors like unbalanced parantheses, brackets, and braces. Don't forget about
+ * quotes, both single and double, escape sequences and comments. (This program
+ * is hard if you do it in full generality).
  */
 
 #include <stdbool.h>
@@ -18,11 +18,7 @@ long htoi(char s[])
    int exponent = 0;
    long total = 0;
    while (i >= 0) {
-      if (i == 1 && (s[i] == 'x' || s[i] == 'X') && (s[0] == '0'))
-         ;
-      else if (s[i] == '0')
-         ;
-      else if (s[i] == '1')
+      if (s[i] == '1')
          total += 1 * pow(16, exponent++);
       else if (s[i] == '2')
          total += 2 * pow(16, exponent++);
@@ -52,8 +48,6 @@ long htoi(char s[])
          total += 14 * pow(16, exponent++);
       else if (tolower(s[i]) == 'f')
          total += 15 * pow(16, exponent++);
-      else
-         return -1;
       i--;
    }
    return total; 
