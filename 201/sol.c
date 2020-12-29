@@ -9,6 +9,8 @@
 #include <limits.h>
 #include <float.h>
 
+char compute_char_max(void);
+
 int main()
 {
    printf("\n-------------------\n");
@@ -36,5 +38,18 @@ int main()
    printf("LDBL_MIN: %Lf\n", LDBL_MIN);
    printf("LDBL_MAX: %Lf\n", LDBL_MAX);
 
+   printf("\n-------------------\n");
+   printf("bit operations");
+   printf("\n-------------------\n");
+   printf("CHAR_MAX: %d\n", compute_char_max());
+
    return 0;
+}
+
+char compute_char_max(void)
+{
+   unsigned char c;
+   c = ~(c & 0); /* set all bits to 1 */
+   c >>= 1; /* fill MSB with 0 */
+   return (char) c;
 }
