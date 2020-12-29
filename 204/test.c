@@ -6,13 +6,23 @@
 
 int main()
 {
-   assert(htoi("0") == 0);
-   assert(htoi("1") == 1);
-   assert(htoi("123") == 291);
-   assert(htoi("123456789") == 4886718345);
-   assert(htoi("a") == 10);
-   assert(htoi("A") == 10);
-   assert(htoi("abcdef") == 11259375);
+   char s1[MAXLINE];
+   char s2[MAXLINE];
+
+   strcpy(s1, "abcdefg");
+   strcpy(s2, "abcdef");
+   squeeze(s1, s2);
+   assert(strcmp(s1, "g") == 0);
+
+   strcpy(s1, "abcdefg");
+   strcpy(s2, "abcdefg");
+   squeeze(s1, s2);
+   assert(strcmp(s1, "") == 0);
+
+   strcpy(s1, "hello");
+   strcpy(s2, "world");
+   squeeze(s1, s2);
+   assert(strcmp(s1, "he") == 0);
 
    printf("All tests passed.\n");
    return 0;
