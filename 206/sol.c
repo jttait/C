@@ -22,7 +22,6 @@ unsigned setbits(unsigned x, int p, int n, int y)
    xmask = ~(xmask & 0); /* set all bits to 1 */
    xmask = xmask & (~0 << n); /* set rightmost n bits to 0 */
    xmask = xmask << p; /* shift left, fills rightmost (p-1) bits with 0 */
-   
    xmask = xmask | ~(~0 << p); /* fill 1s back into rightmost (p-1) bits */
    x = x & xmask; /* set n bits at position p to 0 */
 
