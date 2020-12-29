@@ -64,3 +64,5 @@ cd ../209
 make -s clean
 cd ../210
 make -s clean
+cd ../301
+make -s clean
