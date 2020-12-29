@@ -19,7 +19,7 @@ unsigned invert(unsigned x, int p, int n)
    inverted = x >> p; /* shift the n bits to the rightmost */
    inverted = ~inverted; /* invert all bits */
    mask = mask & 0; /* set all bits to 0 */
-   mask = mask | ~(~0 << n); /* set rightmost n bits to n */
+   mask = mask | ~(~0 << n); /* set rightmost n bits to 1 */
    inverted = inverted & mask; /* zero all other bits except the n bits */
    inverted = inverted << p; /* shift the n bits back to their position */
 
