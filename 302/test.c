@@ -27,7 +27,6 @@ int main()
 
    strcpy(t, "\\thello\\t\\t\\tworld\\n");
    deescape(t, s);
-   printf("%s\n", s);
    assert(strcmp(s, "\thello\t\t\tworld\n") == 0);
 
    printf("All tests passed.\n");

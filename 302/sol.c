@@ -1,7 +1,8 @@
 /*
- * Exercise 3-1. Our binary search makes two tests inside the loop, when one
- * would suffice (at the price of more tests outside). Write a version with only
- * one test inside the loop and measure the difference in runtime.
+ * Exercise 3-2. Write a function escape(s,t) that converts characters like
+ * newline and tab into visible escape sequences like \n and \t as it copies the
+ * string t to s. Use a switch. Write a function for the other directoin as
+ * well, converting escape sequences into the real characters.
  */
 
 #include <stdbool.h>
@@ -33,6 +34,7 @@ void escape(char s[], char t[])
       }
       i++;
    }  
+   u[j] = '\0';
    copy(t, u);
 }
 
@@ -58,11 +60,13 @@ void deescape(char t[], char s[])
                   u[j++] = t[i++];
                   break;
             }
+            break;
          default:
             u[j++] = t[i++];
             break;
       }
    }
+   u[j] = '\0';
    copy(s, u);
 }
 

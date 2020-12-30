@@ -9,7 +9,18 @@
 #include <limits.h>
 #include <float.h>
 
+char compute_char_min(void);
 char compute_char_max(void);
+unsigned char compute_uchar_max(void);
+short compute_shrt_min(void);
+short compute_shrt_max(void);
+unsigned short compute_ushrt_max(void);
+int compute_int_min(void);
+int compute_int_max(void);
+unsigned int compute_uint_max(void);
+long compute_long_min(void);
+long compute_long_max(void);
+unsigned long compute_ulong_max(void);
 
 int main()
 {
@@ -18,6 +29,7 @@ int main()
    printf("\n-------------------\n");
    printf("CHAR_MIN: %d\n", CHAR_MIN);
    printf("CHAR_MAX: %d\n", CHAR_MAX);
+   printf("UCHAR_MAX: %d\n", UCHAR_MAX);
    printf("SHRT_MIN: %d\n", SHRT_MIN);
    printf("SHRT_MAX: %d\n", SHRT_MAX);
    printf("USHRT_MAX: %d\n", USHRT_MAX);
@@ -41,9 +53,30 @@ int main()
    printf("\n-------------------\n");
    printf("bit operations");
    printf("\n-------------------\n");
-   printf("CHAR_MAX: %d\n", compute_char_max());
+   printf("char min: %d\n", compute_char_min());
+   printf("char max: %d\n", compute_char_max());
+   printf("unsigned char: %d\n", compute_uchar_max());
+   printf("short min: %d\n", compute_shrt_min());
+   printf("short max: %d\n", compute_shrt_max());
+   printf("unsigned short max: %d\n", compute_ushrt_max());
+   printf("int min: %d\n", compute_int_min());
+   printf("int max: %d\n", compute_int_max());
+   printf("unsigned int max: %u\n", compute_uint_max());
+   printf("long min: %ld\n", compute_long_min());
+   printf("long max: %ld\n", compute_long_max());
+   printf("unsigned long max: %lu\n", compute_ulong_max());
 
    return 0;
+}
+
+char compute_char_min(void)
+{
+   unsigned char c;
+   size_t num_bytes = sizeof(unsigned char);
+   int num_bits = num_bytes * 8;
+   c = 1; /* all bits 0 except least significant bit */
+   c <<= (num_bits - 1);
+   return (char) c;
 }
 
 char compute_char_max(void)
@@ -52,4 +85,86 @@ char compute_char_max(void)
    c = ~(c & 0); /* set all bits to 1 */
    c >>= 1; /* fill MSB with 0 */
    return (char) c;
+}
+
+unsigned char compute_uchar_max(void)
+{
+   unsigned char c;
+   c = ~(c & 0); /* set all bits to 1 */
+   return c;
+}
+
+short compute_shrt_min(void)
+{
+   unsigned short i;
+   size_t num_bytes = sizeof(unsigned short);
+   int num_bits = num_bytes * 8;
+   i = 1; /* all bits 0 except least significant bit */
+   i <<= (num_bits - 1);
+   return (short) i;
+}
+
+short compute_shrt_max(void)
+{
+   unsigned short i;
+   i = ~(i & 0); /* set all bits to 1 */
+   i >>= 1; /* fill most significant bit with 0 */
+   return (short) i;
+}
+
+unsigned short compute_ushrt_max(void)
+{
+   unsigned short i;
+   i = ~(i & 0); /* set all bits to 1 */
+   return i;
+}
+
+int compute_int_min(void)
+{
+   unsigned int i;
+   size_t num_bytes = sizeof(unsigned int);
+   int num_bits = num_bytes * 8;
+   i = 1; /* all bits 0 except least significant bit */
+   i <<= (num_bits - 1);
+   return (int) i;
+}
+
+int compute_int_max(void)
+{
+   unsigned int i;
+   i = ~(i & 0); /* set all bits to 1 */
+   i >>= 1; /* fill most significant bit with 0 */
+   return (int) i;
+}
+
+unsigned int compute_uint_max(void)
+{
+   unsigned int i;
+   i = ~(i & 0); /* set all bits to 1 */
+   return i;
+}
+
+long compute_long_min(void)
+{
+   unsigned long i;
+   size_t num_bytes = sizeof(unsigned long);
+   int num_bits = num_bytes * 8;
+   i = 1; /* all bits 0 except least significant bit */
+   i <<= (num_bits - 1);
+   return (long) i;
+}
+
+long compute_long_max(void)
+{
+   unsigned long i;
+   i = ~(i & 0); /* set all bits to 1 */
+   i >>= 1; /* fill most significant bit with 0 */
+   return (long) i;
+}
+
+unsigned long compute_ulong_max(void)
+{
+   unsigned long i;
+   i = ~(i & 0); /* set all bits to 1 */
+   return i;
 }
