@@ -82,3 +82,5 @@ cd ../402
 make -s clean
 cd ../403
 make -s clean
+cd ../404
+make -s clean
