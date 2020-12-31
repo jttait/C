@@ -17,8 +17,6 @@ void rpn(void);
 int getop(char []);
 void push(double);
 double pop(void);
-void clear(void);
-double peek(void);
 int getch(void);
 void ungetch(int c);
 double atof2(char s[]);
@@ -51,30 +49,6 @@ void rpn(void)
                push(pop() / op2);
             else
                printf("error: zero divisor\n");
-            break;
-         case '%':
-            op2 = pop();
-            if (op2 != 0.0)
-               push((int) pop() % (int) op2);
-            else
-               printf("error: zero divisor\n");
-            break;
-         case PEEK: /* print top element without popping */
-            printf("\t%.8g\n", peek());
-            break;
-         case DUPLICATE: /* duplicate top element of stack */
-            op2 = pop();
-            push(op2);
-            push(op2);
-            break;
-         case SWAP: /* swap top two elments */
-            op2 = pop();
-            op3 = pop();
-            push(op2);
-            push(op3);
-            break;
-         case CLEAR:
-            clear();
             break;
          case SIN:
             push(sin(pop()));
@@ -154,14 +128,6 @@ int getop(char s[])
       if (strlen(s) == 1) {
          return c;
       }
-      else if (strcmp(s, "peek") == 0)
-         return PEEK;
-      else if (strcmp(s, "duplicate") == 0)
-         return DUPLICATE;
-      else if (strcmp(s, "swap") == 0)
-         return SWAP;
-      else if (strcmp(s, "clear") == 0)
-         return CLEAR;
       else if (strcmp(s, "sin") == 0)
          return SIN;
       else if (strcmp(s, "exp") == 0)

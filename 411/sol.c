@@ -1,7 +1,7 @@
 /*
- * Exercise 4-4. Add commands to print the top element of the stack without
- * popping, to duplicate it, and to swap the top two elements. Add a command to
- * clear the stack.
+ * Exercise 4-3. Given the basic framework, it's straightforward to extend the
+ * calculator. Add the modulus (%) operator and provisions for negative
+ * numbers.
  */
 
 #include <stdbool.h>
@@ -19,17 +19,13 @@ void rpn(void);
 int getop(char []);
 void push(double);
 double pop(void);
-void clear(void);
-double peek(void);
 int getch(void);
-void ungetch(int c);
 double atof2(char s[]);
 
 void rpn(void)
 {
    int type;
    double op2;
-   double op3;
    char s[MAXOP];
 
    while ((type = getop(s)) != EOF) {
@@ -53,23 +49,6 @@ void rpn(void)
                push(pop() / op2);
             else
                printf("error: zero divisor\n");
-            break;
-         case 'p': /* print top element without popping */
-            printf("\t%.8g\n", peek());
-            break;
-         case 'd': /* duplicate top element of stack */
-            op2 = pop();
-            push(op2);
-            push(op2);
-            break;
-         case 's': /* swap top two elments */
-            op2 = pop();
-            op3 = pop();
-            push(op2);
-            push(op3);
-            break;
-         case 'c':
-            clear();
             break;
          case '\n':
             printf("\t%.8g\n", pop());
@@ -103,36 +82,17 @@ double pop(void)
    }
 }
 
-void clear(void)
-{
-   sp = 0;
-}
-
-double peek(void)
-{
-   if (sp > 0)
-      return val[sp-1];
-   else {
-      printf("error: stack empty\n");
-      return 0.0;
-   }
-}
-
 int getop(char s[])
 {
    int i, c;
+   static char buffer = EOF;
+
    while ((s[0] = c = getch()) == ' ' || c == '\t')
       ;
    s[1] = '\0';
-   if (!isdigit(c) && c != '.' && c != '-')
+   if (!isdigit(c) && c != '.')
       return c;
    i = 0;
-   if (c == '-')
-      s[++i] = c = getch();
-      if (!isdigit(c)) {
-         ungetch(c);
-         return c;
-      }
    if (isdigit(c))
       while (isdigit(s[++i] = c = getch()))
          ;
@@ -141,7 +101,7 @@ int getop(char s[])
          ;
    s[i] = '\0';
    if (c != EOF)
-      ungetch(c);
+      buffer = c;
    return NUMBER;
 }
 
@@ -153,14 +113,6 @@ int bufp = 0;
 int getch(void)
 {
    return (bufp > 0) ? buf[--bufp] : getchar();
-}
-
-void ungetch(int c)
-{
-   if (bufp >= BUFSIZE)
-      printf("ungetch: too many characters\n");
-   else
-      buf[bufp++] = c;
 }
 
 double atof2(char s[])
