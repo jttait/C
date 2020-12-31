@@ -12,12 +12,6 @@
 #include "sol.h"
 
 #define MAXOP 100
-#define NUMBER '0'
-
-enum function {
-   PEEK=100,
-   SWAP=101
-};
 
 void rpn(void);
 int getop(char []);
@@ -65,22 +59,32 @@ void rpn(void)
             else
                printf("error: zero divisor\n");
             break;
-         case 'p': /* print top element without popping */
+         case PEEK: /* print top element without popping */
             printf("\t%.8g\n", peek());
             break;
-         case 'd': /* duplicate top element of stack */
+         case DUPLICATE: /* duplicate top element of stack */
             op2 = pop();
             push(op2);
             push(op2);
             break;
-         case 's': /* swap top two elments */
+         case SWAP: /* swap top two elments */
             op2 = pop();
             op3 = pop();
             push(op2);
             push(op3);
             break;
-         case 'c':
+         case CLEAR:
             clear();
+            break;
+         case SIN:
+            push(sin(pop()));
+            break;
+         case POW:
+            op2 = pop();
+            push(pow(pop(), op2));
+            break;
+         case EXP:
+            push(exp(pop()));
             break;
          case '\n':
             printf("\t%.8g\n", pop());
@@ -131,22 +135,39 @@ double peek(void)
 
 int getop(char s[])
 {
-   int i, c, j;
-   char f[10];
+   int i, c;
+
    while ((s[0] = c = getch()) == ' ' || c == '\t')
       ;
    s[1] = '\0';
 
+   i = 0;
    if (!isdigit(c) && c != '.' && c != '-') {
-      j = 0;
-      while ((f[j] = getch()) != ' ' && f[j] != '\t' && f[j] != EOF) {
-         printf("%d\n", j);
-         j++;
-      }
-      f[j] = '\0';
-      printf("%s\n", f);
-      if (strlen(f) == 1)
+      if (!islower(c))
          return c;
+
+      while (islower(s[++i] = c = getch()))
+         ;
+      s[i] = '\0';
+      if (c != EOF)
+         ungetch(c);
+      if (strlen(s) == 1) {
+         return c;
+      }
+      else if (strcmp(s, "peek") == 0)
+         return PEEK;
+      else if (strcmp(s, "duplicate") == 0)
+         return DUPLICATE;
+      else if (strcmp(s, "swap") == 0)
+         return SWAP;
+      else if (strcmp(s, "clear") == 0)
+         return CLEAR;
+      else if (strcmp(s, "sin") == 0)
+         return SIN;
+      else if (strcmp(s, "exp") == 0)
+         return EXP;
+      else if (strcmp(s, "pow") == 0)
+         return POW;
    }
 
    i = 0;
