@@ -20,6 +20,7 @@ int main()
    assert(htoi("0xa") == 10);
    assert(htoi("0XA") == 10);
    assert(htoi("0xabcdef") == 11259375);
+   assert(htoi("100") == 256);
  
 
    printf("All tests passed.\n");

@@ -21,5 +21,7 @@ int main()
    strcpy(s2, "cot");
    assert(any(s1, s2) == 2);
 
+   printf("All tests passed.\n");
+
    return 0;
 }

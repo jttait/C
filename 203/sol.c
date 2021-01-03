@@ -14,47 +14,20 @@
 
 long htoi(char s[])
 {
-   int i = strlen(s) - 1;
+   int i;
    int exponent = 0;
    long total = 0;
-   while (i >= 0) {
-      if (i == 1 && (s[i] == 'x' || s[i] == 'X') && (s[0] == '0'))
+   for (i = strlen(s) - 1; i >= 0; i--) {
+      if (i == 1 && (s[i] == 'x' || s[i] == 'X'))
          ;
-      else if (s[i] == '0')
+      else if (i == 0 && s[i] == '0')
          ;
-      else if (s[i] == '1')
-         total += 1 * pow(16, exponent++);
-      else if (s[i] == '2')
-         total += 2 * pow(16, exponent++);
-      else if (s[i] == '3')
-         total += 3 * pow(16, exponent++);
-      else if (s[i] == '4')
-         total += 4 * pow(16, exponent++);
-      else if (s[i] == '5')
-         total += 5 * pow(16, exponent++);
-      else if (s[i] == '6')
-         total += 6 * pow(16, exponent++);
-      else if (s[i] == '7')
-         total += 7 * pow(16, exponent++);
-      else if (s[i] == '8')
-         total += 8 * pow(16, exponent++);
-      else if (s[i] == '9')
-         total += 9 * pow(16, exponent++);
-      else if (tolower(s[i]) == 'a')
-         total += 10 * pow(16, exponent++);
-      else if (tolower(s[i]) == 'b')
-         total += 11 * pow(16, exponent++);
-      else if (tolower(s[i]) == 'c')
-         total += 12 * pow(16, exponent++);
-      else if (tolower(s[i]) == 'd')
-         total += 13 * pow(16, exponent++);
-      else if (tolower(s[i]) == 'e')
-         total += 14 * pow(16, exponent++);
-      else if (tolower(s[i]) == 'f')
-         total += 15 * pow(16, exponent++);
+      else if (s[i] >= '0' && s[i] <= '9')
+         total += (s[i] - '0') * pow(16, exponent++);
+      else if (tolower(s[i]) >= 'a' && tolower(s[i]) <= 'f')
+         total += (tolower(s[i]) - 'a' + 10) * pow(16, exponent++);
       else
          return -1;
-      i--;
    }
    return total; 
 }
