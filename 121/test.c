@@ -18,11 +18,11 @@ int main()
    assert(spaces_to_next_tabstop(9, 8) == 7);
 
    strcpy(testline, "hello world");
-   replace_spaces_with_tabs(testline);
+   entab(testline);
    assert(strcmp(testline, "hello world") == 0);
 
    strcpy(testline, "hello         world");
-   replace_spaces_with_tabs(testline);
+   entab(testline);
    assert(strcmp(testline, "hello\t      world") == 0);
 
    return 0;

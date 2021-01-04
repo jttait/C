@@ -21,7 +21,7 @@ int spaces_to_next_tabstop(int column, int tab_spacing)
    return tab_spacing - (column % tab_spacing);
 }
 
-void replace_spaces_with_tabs(char s[])
+void entab(char s[])
 {
    char entabbed[MAXLINE];
    int j = 0;
