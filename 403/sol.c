@@ -22,6 +22,11 @@ double pop(void);
 int getch(void);
 void ungetch(int c);
 double atof2(char s[]);
+void add(void);
+void multiply(void);
+void subtract(void);
+void divide(void);
+void modulus(void);
 
 void rpn(void)
 {
@@ -35,28 +40,15 @@ void rpn(void)
             push(atof2(s));
             break;
          case '+':
-            push(pop() + pop());
-            break;
+            add(); break;
          case '*':
-            push(pop() * pop());
-            break;
+            multiply(); break;
          case '-':
-            op2 = pop();
-            push(pop() - op2);
-            break;
+            subtract(); break;
          case '/':
-            op2 = pop();
-            if (op2 != 0.0)
-               push(pop() / op2);
-            else
-               printf("error: zero divisor\n");
-            break;
+            divide(); break;
          case '%':
-            op2 = pop();
-            if (op2 != 0.0)
-               push((int) pop() % (int) op2);
-            else
-               printf("error: zero divisor\n");
+            modulus();
             break;
          case '\n':
             printf("\t%.8g\n", pop());
@@ -89,6 +81,41 @@ double pop(void)
       return 0.0;
    }
 }
+
+void add(void)
+{
+   push(pop() + pop());
+}
+
+void multiply(void)
+{
+   push(pop() * pop());
+}
+
+void subtract(void)
+{
+   double op2 = pop();
+   push(pop() - op2);
+}
+
+void divide(void)
+{
+   double op2 = pop();
+   if (op2 != 0.0)
+      push(pop() / op2);
+   else
+      printf("error: zero divisor\n");
+}
+
+void modulus(void)
+{
+   double op2 = pop();
+   if (op2 != 0.0)
+      push((int) pop() % (int) op2);
+   else
+      printf("error: zero divisor\n");
+}
+
 
 int getop(char s[])
 {

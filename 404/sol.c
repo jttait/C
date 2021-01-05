@@ -20,10 +20,17 @@ int getop(char []);
 void push(double);
 double pop(void);
 void clear(void);
-double peek(void);
+void peek(void);
 int getch(void);
 void ungetch(int c);
 double atof2(char s[]);
+void add(void);
+void multiply(void);
+void subtract(void);
+void divide(void);
+void swap(void);
+void duplicate(void);
+void modulus(void);
 
 void rpn(void)
 {
@@ -38,39 +45,25 @@ void rpn(void)
             push(atof2(s));
             break;
          case '+':
-            push(pop() + pop());
-            break;
+            add(); break;
          case '*':
-            push(pop() * pop());
-            break;
+            multiply(); break;
          case '-':
-            op2 = pop();
-            push(pop() - op2);
+            subtract();
             break;
          case '/':
-            op2 = pop();
-            if (op2 != 0.0)
-               push(pop() / op2);
-            else
-               printf("error: zero divisor\n");
+            divide(); break;
+         case '%':
+            modulus();
             break;
          case 'p': /* print top element without popping */
-            printf("\t%.8g\n", peek());
-            break;
+            peek(); break;
          case 'd': /* duplicate top element of stack */
-            op2 = pop();
-            push(op2);
-            push(op2);
-            break;
+            duplicate(); break;
          case 's': /* swap top two elments */
-            op2 = pop();
-            op3 = pop();
-            push(op2);
-            push(op3);
-            break;
+            swap(); break;
          case 'c':
-            clear();
-            break;
+            clear(); break;
          case '\n':
             printf("\t%.8g\n", pop());
             break;
@@ -103,19 +96,67 @@ double pop(void)
    }
 }
 
+void add(void)
+{
+   push(pop() + pop());
+}
+
+void multiply(void)
+{
+   push(pop() * pop());
+}
+
+void subtract(void)
+{
+   double op2 = pop();
+   push(pop() - op2);
+}
+
+void divide(void)
+{
+   double op2 = pop();
+   if (op2 != 0.0)
+      push(pop() / op2);
+   else
+      printf("error: zero divisor\n");
+}
+
+void modulus(void)
+{
+   double op2 = pop();
+   if (op2 != 0.0)
+      push((int) pop() % (int) op2);
+   else
+      printf("error: zero divisor\n");
+}
+
 void clear(void)
 {
    sp = 0;
 }
 
-double peek(void)
+void peek(void)
 {
    if (sp > 0)
-      return val[sp-1];
+      printf("\t%.8g\n", val[sp-1]);
    else {
       printf("error: stack empty\n");
-      return 0.0;
    }
+}
+
+void duplicate(void)
+{
+   double op2 = pop();
+   push(op2);
+   push(op2);
+}
+
+void swap(void)
+{
+   double op2 = pop();
+   double op3 = pop();
+   push(op2);
+   push(op3);
 }
 
 int getop(char s[])

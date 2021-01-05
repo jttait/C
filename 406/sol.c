@@ -1,6 +1,7 @@
 /*
- * Exercise 4-5. Add access to library functions like sin, exp, and pow. See
- * <math.h> in Appendix B, Section 4.
+ * Exercise 4-5. Add commands for handling variables. (It's easy to provide
+ * twenty-six variables with single-letter names). Add a variable for the most
+ * recently printed value.
  */
 
 #include <stdbool.h>
@@ -22,6 +23,16 @@ double peek(void);
 int getch(void);
 void ungetch(int c);
 double atof2(char s[]);
+void add(void);
+void multiply(void);
+void subtract(void);
+void divide(void);
+void modulus(void);
+void duplicate(void);
+void swap(void);
+void sine(void);
+void power(void);
+void exponential(void);
 
 void rpn(void)
 {
@@ -36,56 +47,29 @@ void rpn(void)
             push(atof2(s));
             break;
          case '+':
-            push(pop() + pop());
-            break;
+            add(); break;
          case '*':
-            push(pop() * pop());
-            break;
+            multiply(); break;
          case '-':
-            op2 = pop();
-            push(pop() - op2);
-            break;
+            subtract(); break;
          case '/':
-            op2 = pop();
-            if (op2 != 0.0)
-               push(pop() / op2);
-            else
-               printf("error: zero divisor\n");
-            break;
+            divide(); break;
          case '%':
-            op2 = pop();
-            if (op2 != 0.0)
-               push((int) pop() % (int) op2);
-            else
-               printf("error: zero divisor\n");
-            break;
+            modulus(); break;
          case PEEK: /* print top element without popping */
-            printf("\t%.8g\n", peek());
-            break;
+            printf("\t%.8g\n", peek()); break;
          case DUPLICATE: /* duplicate top element of stack */
-            op2 = pop();
-            push(op2);
-            push(op2);
-            break;
+            duplicate(); break;
          case SWAP: /* swap top two elments */
-            op2 = pop();
-            op3 = pop();
-            push(op2);
-            push(op3);
-            break;
+            swap(); break;
          case CLEAR:
-            clear();
-            break;
+            clear(); break;
          case SIN:
-            push(sin(pop()));
-            break;
+            sine(); break;
          case POW:
-            op2 = pop();
-            push(pow(pop(), op2));
-            break;
+            power(); break;
          case EXP:
-            push(exp(pop()));
-            break;
+            exponential(); break;
          case VARIABLE_PUSHED:
             printf("variable pushed to stack\n");
             break;
@@ -128,6 +112,55 @@ double pop(void)
    }
 }
 
+void add(void)
+{
+   push(pop() + pop());
+}
+
+void multiply(void)
+{
+   push(pop() * pop());
+}
+
+void subtract(void)
+{
+   double op2 = pop();
+   push(pop() - op2);
+} 
+
+void divide(void)
+{
+   double op2 = pop();
+   if (op2 != 0.0)
+      push(pop() / op2);
+   else
+      printf("error: zero divisor\n");
+}
+
+void modulus(void)
+{
+   double op2 = pop();
+   if (op2 != 0.0)
+      push((int) pop() % (int) op2);
+   else
+      printf("error: zero divisor\n");
+}
+
+void duplicate(void)
+{
+   double op2 = pop();
+   push(op2);
+   push(op2);
+}
+
+void swap(void)
+{
+   double op2 = pop();
+   double op3 = pop();
+   push(op2);
+   push(op3);
+}
+
 void clear(void)
 {
    sp = 0;
@@ -141,6 +174,22 @@ double peek(void)
       printf("error: stack empty\n");
       return 0.0;
    }
+}
+
+void sine(void)
+{
+   push(sin(pop()));
+}
+
+void power(void)
+{
+   double op2 = pop();
+   push(pow(pop(), op2));
+}
+
+void exponential(void)
+{
+   push(exp(pop()));
 }
 
 int getop(char s[])

@@ -11,6 +11,14 @@ int main()
 
    /* escape */
 
+   strcpy(s, "\t");
+   escape(s,t);
+   assert(strcmp(t, "\\t") == 0);
+
+   strcpy(s, "\n");
+   escape(s,t);
+   assert(strcmp(t, "\\n") == 0);
+
    strcpy(s, "hello\tworld\n");
    escape(s,t);
    assert(strcmp(t, "hello\\tworld\\n") == 0);
@@ -20,6 +28,14 @@ int main()
    assert(strcmp(t, "\\thello\\t\\t\\tworld\\n") == 0);
 
    /* deescape */
+
+   strcpy(t, "\\t");
+   deescape(t, s);
+   assert(strcmp(s, "\t") == 0);
+
+   strcpy(t, "\\n");
+   deescape(t, s);
+   assert(strcmp(s, "\n") == 0);
 
    strcpy(t, "hello\\tworld\\n");
    deescape(t, s);

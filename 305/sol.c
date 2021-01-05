@@ -23,9 +23,8 @@ void itob(int n, char s[], int b)
       int digit = n % b;
       if (digit < 9)
          s[i++] = digit + '0';
-      else {
+      else
          s[i++] = digit - 10 + 'a';
-      }
    } while ((n /= b) > 0);
 
    s[i] = '\0';

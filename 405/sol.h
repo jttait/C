@@ -7,9 +7,13 @@ void rpn(void);
 
 enum function {
    NUMBER=0,
-   SIN=5,
-   EXP=6,
-   POW=7
+   SIN=1000,
+   EXP=1001,
+   POW=1002,
+   PEEK=1003,
+   DUPLICATE=1004,
+   CLEAR=1005,
+   SWAP=1006
 };
 
 

@@ -1,8 +1,9 @@
 /*
- * Exercise 3-2. Write a function escape(s,t) that converts characters like
- * newline and tab into visible escape sequences like \n and \t as it copies the
- * string t to s. Use a switch. Write a function for the other directoin as
- * well, converting escape sequences into the real characters.
+ * Exercise 3-3. Write a function expand(s1, s2) that expands shorthand
+ * notations like a-z in the string s1 into the equivalent complete list
+ * abc...xyz in s2. Allow for letters of either case and digits, and be prepared
+ * to handle cases like a-b-c and a-z0-9 and -a-z. Arrange that a leading or
+ * trailing - is taken literally.
  */
 
 #include <stdbool.h>
@@ -63,51 +64,41 @@ void expand(char s1[], char s2[])
 char findEndLower(char s[], int* i)
 {
    char end = 'z';
-   while (s[*i] != '\0' && s[(*i)++] == '-') {
-      if (islower(s[*i])) {
+   while (s[*i] != '\0' && s[(*i)++] == '-')
+      if (islower(s[*i]))
          end = s[(*i)++];
-      }
-      else {
+      else
          end = 'z';
-      }
-   }
    return end;
 }
 
 char findEndUpper(char s[], int* i)
 {
    char end = 'Z';
-   while (s[*i] != '\0' && s[(*i)++] == '-') {
-      if (isupper(s[*i])) {
+   while (s[*i] != '\0' && s[(*i)++] == '-')
+      if (isupper(s[*i]))
          end = s[(*i)++];
-      }
-      else {
+      else
          end = 'Z';
-      }
-   }
    return end;
 }
 
 char findEndDigits(char s[], int* i)
 {
    char end = '9';
-   while (s[*i] != '\0' && s[(*i)++] == '-') {
-      if (isdigit(s[*i])) {
+   while (s[*i] != '\0' && s[(*i)++] == '-')
+      if (isdigit(s[*i]))
          end = s[(*i)++];
-      }
-      else {
+      else
          end = '9';
-      }
-   }
    return end;
 }
 
 int writeRange(char s[], int j, int start, int end)
 {
    char c;
-   for (c = start; c <= end; c++) {
+   for (c = start; c <= end; c++)
       s[j++] = c;
-   }
    return j;
 }
 
